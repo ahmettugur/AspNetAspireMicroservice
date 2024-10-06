@@ -47,4 +47,4 @@
 
 ## Structured Logs
 
-<img src = "hhttps://github.com/ahmettugur/AspNetAspireMicroservice/blob/master/AspNetAspireMicroservice/_images/_images/logs.png" />
+<img src = "https://github.com/ahmettugur/AspNetAspireMicroservice/blob/master/AspNetAspireMicroservice/_images/_images/logs.png" />

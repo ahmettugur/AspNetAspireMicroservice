@@ -36,7 +36,7 @@
 }
 ```
 
-<img src = "https://github.com/ahmettugur/AspNetAspireMicroservice/blob/master/AspNetAspireMicroservice/_images/swagger_ui.png.png" />
+<img src = "https://github.com/ahmettugur/AspNetAspireMicroservice/blob/master/AspNetAspireMicroservice/_images/swagger_ui.png" />
 
 
 ## Tracing
@@ -47,4 +47,4 @@
 
 ## Structured Logs
 
-<img src = "https://github.com/ahmettugur/AspNetAspireMicroservice/blob/master/AspNetAspireMicroservice/_images/_images/logs.png" />
+<img src = "https://github.com/ahmettugur/AspNetAspireMicroservice/blob/master/AspNetAspireMicroservice/_images/logs.png" />

@@ -8,7 +8,7 @@
 ## Running in Debug Mode
 
 * Open Docker Desktop
-* Run 'ApNetAspireMicroservice.AppHost' project Visual Studio 2022 or Visual Studio Code or Rider
+* Run 'AspNetAspireMicroservice.AppHost' project Visual Studio 2022 or Visual Studio Code or Rider
 
 ## Tool Set
 

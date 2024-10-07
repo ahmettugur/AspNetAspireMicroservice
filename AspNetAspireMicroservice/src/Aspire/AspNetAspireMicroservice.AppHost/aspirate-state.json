@@ -1,0 +1,55 @@
+{
+  "projectPath": ".",
+  "inputPath": "aspirate-output",
+  "outputPath": "aspirate-output",
+  "containerRegistry": "docker.io",
+  "containerImageTags": [
+    "latest"
+  ],
+  "imagePullPolicy": "IfNotPresent",
+  "containerBuilder": "docker",
+  "containerRepositoryPrefix": "ahmettugur",
+  "kubeContext": "minikube",
+  "outputFormat": "kustomize",
+  "skipFinalKustomizeGeneration": false,
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "useCustomNamespace": false,
+  "secrets": {
+    "salt": "oj0cPDVSwDT0SD6Y",
+    "hash": "mWNonzwcEfgmJB/njniF\u002BjdW4zDpBEYzX1le7GnPbVs=",
+    "secrets": {
+      "Username": {
+        "value": "oj0cPDVSwDT0SD6YRMbTPVhzCzhPBNjqyvgmJ4LCYspL"
+      },
+      "Password": {
+        "value": "oj0cPDVSwDT0SD6YRMbTPVhzCzhPBNjqyvgmJ4LCYspL"
+      },
+      "PostgresUsername": {
+        "value": "oj0cPDVSwDT0SD6YaooCxFpJd0/VQzv484ZYy5XYdM1Y/Xug"
+      },
+      "PostgresPassword": {
+        "value": "oj0cPDVSwDT0SD6Yr8OxPJ7nBJz4Hfb0TcTu46TfatxLvifqYw=="
+      },
+      "postgres": {
+        "POSTGRES_PASSWORD": "oj0cPDVSwDT0SD6Yr8OxPJ7nBJz4Hfb0TcTu46TfatxLvifqYw=="
+      },
+      "ClientsDb": {},
+      "AccountsDb": {},
+      "rabbitmq-broker": {},
+      "riskevaluator-grpc": {},
+      "clients-api": {
+        "ConnectionStrings__ClientsDb": "oj0cPDVSwDT0SD6YKL/z0XTK4g4bTD4nOJ3pT63YdM0C/3GgJ3FH0OPkf8ZUL5J4hiTy6q9PJsszBpO41sVOi9PlVa687/PNsKkHyyAtBrJNnnsgUUKSnhnwP23EHnfR0\u002B3CImFWd\u002B1gjII=",
+        "ConnectionStrings__rabbitmq-broker": "oj0cPDVSwDT0SD6Y7/tCUwTF1rdy8Lpf5PWUsYTadskFoDG0JnNGwaq4WsxVL\u002B8/03WiuI5RMpQ/FZG2jscbzZG1FQ=="
+      },
+      "accounts-api": {
+        "ConnectionStrings__AccountsDb": "oj0cPDVSwDT0SD6YCuh\u002BxdHj7XHcWVHF8TTUxq3YdM0C/3GgJ3FH0OPkf8ZUL5J4hiTy6q9PJsszBpO41sVOi9PlVa687/PNsKkHyyAtBrJNnnsgUUKSnhnwP23EHnfR0\u002B3ALWtcbPdnu6Rh",
+        "ConnectionStrings__rabbitmq-broker": "oj0cPDVSwDT0SD6Y7/tCUwTF1rdy8Lpf5PWUsYTadskFoDG0JnNGwaq4WsxVL\u002B8/03WiuI5RMpQ/FZG2jscbzZG1FQ=="
+      },
+      "notifications-api": {
+        "ConnectionStrings__rabbitmq-broker": "oj0cPDVSwDT0SD6Y7/tCUwTF1rdy8Lpf5PWUsYTadskFoDG0JnNGwaq4WsxVL\u002B8/03WiuI5RMpQ/FZG2jscbzZG1FQ=="
+      }
+    }
+  },
+  "processAllComponents": true
+}

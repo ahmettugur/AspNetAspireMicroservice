@@ -1,0 +1,11 @@
+{
+  "TemplatePath": null,
+  "ContainerSettings": {
+    "Registry": "docker.io",
+    "RepositoryPrefix": "ahmettugur",
+    "Tags": [
+      "latest"
+    ],
+    "Builder": "docker"
+  }
+}

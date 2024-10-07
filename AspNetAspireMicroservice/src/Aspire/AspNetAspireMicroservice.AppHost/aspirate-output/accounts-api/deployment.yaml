@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts-api
+  labels:
+    app: accounts-api
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounts-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: accounts-api
+    spec:
+      containers:
+      - name: accounts-api
+        image: docker.io/ahmettugur/accounts-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        envFrom:
+        - configMapRef:
+            name: accounts-api-env
+        - secretRef:
+            name: accounts-api-secrets
+      terminationGracePeriodSeconds: 180

@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-api
+  labels:
+    app: notifications-api
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: notifications-api
+    spec:
+      containers:
+      - name: notifications-api
+        image: docker.io/ahmettugur/notifications-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        envFrom:
+        - configMapRef:
+            name: notifications-api-env
+        - secretRef:
+            name: notifications-api-secrets
+      terminationGracePeriodSeconds: 180

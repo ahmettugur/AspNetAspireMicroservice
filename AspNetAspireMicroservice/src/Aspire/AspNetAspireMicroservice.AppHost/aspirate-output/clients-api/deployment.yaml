@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clients-api
+  labels:
+    app: clients-api
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clients-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: clients-api
+    spec:
+      containers:
+      - name: clients-api
+        image: docker.io/ahmettugur/clients-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        envFrom:
+        - configMapRef:
+            name: clients-api-env
+        - secretRef:
+            name: clients-api-secrets
+      terminationGracePeriodSeconds: 180

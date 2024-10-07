@@ -1,0 +1,13 @@
+resources:
+- postgres
+- rabbitmq-broker
+- riskevaluator-grpc
+- clients-api
+- accounts-api
+- notifications-api
+- dashboard.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+

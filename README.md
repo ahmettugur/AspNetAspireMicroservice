@@ -10,6 +10,18 @@
 * Open Docker Desktop
 * Run 'AspNetAspireMicroservice.AppHost' project Visual Studio 2022 or Visual Studio Code or Rider
 
+## Running in local k8s cluster
+
+```bash
+dotnet tool install -g aspirate --prerelease
+
+aspirate init
+
+aspirate generate
+
+aspirate apply
+```
+
 ## Tool Set
 
 * Asp.Net Aspire

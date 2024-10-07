@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json.schemastore.org/aspire-8.0.json",
+  "resources": {
+    "Username": {
+      "type": "parameter.v0",
+      "value": "{Username.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "Password": {
+      "type": "parameter.v0",
+      "value": "{Password.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "PostgresUsername": {
+      "type": "parameter.v0",
+      "value": "{PostgresUsername.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "PostgresPassword": {
+      "type": "parameter.v0",
+      "value": "{PostgresPassword.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "postgres": {
+      "type": "container.v0",
+      "connectionString": "Host={postgres.bindings.tcp.host};Port={postgres.bindings.tcp.port};Username={PostgresUsername.value};Password={PostgresPassword.value}",
+      "image": "docker.io/library/postgres:16.4",
+      "env": {
+        "POSTGRES_HOST_AUTH_METHOD": "scram-sha-256",
+        "POSTGRES_INITDB_ARGS": "--auth-host=scram-sha-256 --auth-local=scram-sha-256",
+        "POSTGRES_USER": "{PostgresUsername.value}",
+        "POSTGRES_PASSWORD": "{PostgresPassword.value}"
+      },
+      "bindings": {
+        "tcp": {
+          "scheme": "tcp",
+          "protocol": "tcp",
+          "transport": "tcp",
+          "targetPort": 5432
+        }
+      }
+    },
+    "ClientsDb": {
+      "type": "value.v0",
+      "connectionString": "{postgres.connectionString};Database=ClientsDb"
+    },
+    "AccountsDb": {
+      "type": "value.v0",
+      "connectionString": "{postgres.connectionString};Database=AccountsDb"
+    },
+    "rabbitmq-broker": {
+      "type": "container.v0",
+      "connectionString": "amqp://{Username.value}:{Password.value}@{rabbitmq-broker.bindings.tcp.host}:{rabbitmq-broker.bindings.tcp.port}",
+      "image": "docker.io/library/rabbitmq:3.13-management",
+      "env": {
+        "RABBITMQ_DEFAULT_USER": "{Username.value}",
+        "RABBITMQ_DEFAULT_PASS": "{Password.value}"
+      },
+      "bindings": {
+        "tcp": {
+          "scheme": "tcp",
+          "protocol": "tcp",
+          "transport": "tcp",
+          "targetPort": 5672
+        },
+        "management": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "targetPort": 15672
+        }
+      }
+    },
+    "riskevaluator-grpc": {
+      "type": "project.v0",
+      "path": "../../RiskEvaluator/RiskEvaluator.Grpc/RiskEvaluator.Grpc.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "HTTP_PORTS": "{riskevaluator-grpc.bindings.http.targetPort}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http2"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http2"
+        }
+      }
+    },
+    "clients-api": {
+      "type": "project.v0",
+      "path": "../../Clients/Clients.Api/Clients.Api.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "HTTP_PORTS": "{clients-api.bindings.http.targetPort}",
+        "ConnectionStrings__ClientsDb": "{ClientsDb.connectionString}",
+        "ConnectionStrings__rabbitmq-broker": "{rabbitmq-broker.connectionString}",
+        "services__riskevaluator-grpc__http__0": "{riskevaluator-grpc.bindings.http.url}",
+        "services__riskevaluator-grpc__https__0": "{riskevaluator-grpc.bindings.https.url}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "external": true
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http",
+          "external": true
+        }
+      }
+    },
+    "accounts-api": {
+      "type": "project.v0",
+      "path": "../../Accounts/Accounts.Api/Accounts.Api.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "HTTP_PORTS": "{accounts-api.bindings.http.targetPort}",
+        "ConnectionStrings__AccountsDb": "{AccountsDb.connectionString}",
+        "ConnectionStrings__rabbitmq-broker": "{rabbitmq-broker.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    },
+    "notifications-api": {
+      "type": "project.v0",
+      "path": "../../Notifications/Notifications.Api/Notifications.Api.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "HTTP_PORTS": "{notifications-api.bindings.http.targetPort}",
+        "ConnectionStrings__rabbitmq-broker": "{rabbitmq-broker.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    }
+  }
+}

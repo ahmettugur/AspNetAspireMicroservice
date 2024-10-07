@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: notifications-api
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: notifications-api
   ports:
@@ -14,3 +14,7 @@ spec:
   - name: https
     port: 8443
     targetPort: 8443
+  - name: tcp
+    port: 8083
+    targetPort: 8080
+    nodePort: 30004

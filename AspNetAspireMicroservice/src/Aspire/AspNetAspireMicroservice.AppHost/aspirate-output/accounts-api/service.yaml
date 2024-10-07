@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: accounts-api
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: accounts-api
   ports:
@@ -14,3 +14,7 @@ spec:
   - name: https
     port: 8443
     targetPort: 8443
+  - name: tcp
+    port: 8082
+    targetPort: 8080
+    nodePort: 30003

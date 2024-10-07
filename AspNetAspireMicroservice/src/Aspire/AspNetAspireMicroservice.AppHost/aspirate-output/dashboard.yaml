@@ -45,8 +45,9 @@ spec:
       protocol: TCP
       port: 18888
       targetPort: 18888
+      nodePort: 30001
     - name: otlp
       protocol: TCP
       port: 18889
       targetPort: 18889
-  type: ClusterIP
+  type: NodePort

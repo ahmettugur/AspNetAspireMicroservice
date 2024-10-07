@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: riskevaluator-grpc
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: riskevaluator-grpc
   ports:
@@ -14,3 +14,7 @@ spec:
   - name: https
     port: 8443
     targetPort: 8443
+  - name: tcp
+    port: 8084
+    targetPort: 8080
+    nodePort: 30005

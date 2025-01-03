@@ -11,19 +11,15 @@ var rabbitPass = builder.AddParameter("Password", true);
 var postgresUsername = builder.AddParameter("PostgresUsername");
 var postgresPassword = builder.AddParameter("PostgresPassword", true);
 
-var postgres = builder.AddPostgres("postgres", postgresUsername, postgresPassword, 5432);
+var postgres = builder.AddPostgres("postgres", postgresUsername, postgresPassword, 5432).WithImageTag("latest");
 
 var clientsDb = postgres
-    .WithHealthCheck()
     .AddDatabase("ClientsDb");
 
 var accountsDb = postgres
-    .WithHealthCheck()
     .AddDatabase("AccountsDb");
-    
 
-var messaging = builder.AddRabbitMQ("rabbitmq-broker", rabbitUser, rabbitPass,port: 5672)
-    .WithHealthCheck()
+var messaging = builder.AddRabbitMQ("rabbitmq-broker", rabbitUser, rabbitPass, port: 5672)
     .WithManagementPlugin();
 
 var riskevaluator = builder.AddProject<Projects.RiskEvaluator_Grpc>("riskevaluator-grpc");

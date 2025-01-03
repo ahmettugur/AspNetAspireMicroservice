@@ -1,7 +1,7 @@
 ## Prerequities
 
 * Asp.Net Aspire
-* Asp.Net Core 8
+* Asp.Net Core 9
 * Docker Desktop
 
 
@@ -13,8 +13,8 @@
 ## Tool Set
 
 * Asp.Net Aspire
-* Asp.Net Core 8
-* Entity Framework Core 8
+* Asp.Net Core 9
+* Entity Framework Core 9
 * OpenTelemetry
 * PostgreSQL
 * RabbitMQ
